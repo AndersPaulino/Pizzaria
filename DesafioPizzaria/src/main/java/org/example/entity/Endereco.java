@@ -1,11 +1,11 @@
 package org.example.entity;
 
-public class Endereço {
+public class Endereco {
     private String bairro;
     private String rua;
     private int numero;
 
-    public Endereço(String bairro, String rua, int numero) {
+    public Endereco(String bairro, String rua, int numero) {
         this.bairro = bairro;
         this.rua = rua;
         this.numero = numero;

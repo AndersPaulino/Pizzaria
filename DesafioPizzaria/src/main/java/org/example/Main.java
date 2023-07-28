@@ -1,8 +1,16 @@
 package org.example;
 
+import org.example.entity.Cliente;
+import org.example.entity.Endereco;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+    static List<Cliente> clientes = new ArrayList<>();
+    static List<Endereco> enderecos = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
