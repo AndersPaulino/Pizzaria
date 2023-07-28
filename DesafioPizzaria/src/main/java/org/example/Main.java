@@ -28,9 +28,12 @@ public class Main {
                     pedido();
                     break;
                 case 3:
-                    buscar();
+                    verPedidos();
                     break;
                 case 4:
+                    buscar();
+                    break;
+                case 5:
                     entregar();
                     break;
                 case 0:
@@ -46,8 +49,9 @@ public class Main {
         System.out.println("Menu");
         System.out.println("1 - Cadastrar novo cliente!");
         System.out.println("2 - Novo Pedido!");
-        System.out.println("3 - Dados do Cliente");
-        System.out.println("4 - Entregar");
+        System.out.println("3 - Pedidos!");
+        System.out.println("4 - Dados do Cliente");
+        System.out.println("5 - Entregar");
         System.out.println("0 - Sair");
         System.out.println("Digite o número da opção desejada:");
     }
@@ -70,6 +74,9 @@ public class Main {
         clientes.add(new Cliente(nome,cpf,enderecos));
     }
     public static void pedido(){
+
+    }
+    public static void verPedidos(){
 
     }
     public static void buscar() {
