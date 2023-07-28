@@ -106,8 +106,20 @@ public class Main {
         }
     }
 
-    public static void verPedidos(){
+    public static void verPedidos() {
+        if (pedidos.isEmpty()) {
+            System.out.println("Nenhum pedido encontrado.");
+            return;
+        }
 
+        System.out.println("Lista de Pedidos:");
+        for (Pedido pedido : pedidos) {
+            System.out.println("Cliente: " + pedido.getCliente().getNome());
+            System.out.println("Prato: " + pedido.getNome());
+            System.out.println("Valor: " + pedido.getValor());
+            System.out.println("Status: " + pedido.getStatus());
+            System.out.println("--------------------");
+        }
     }
     public static void buscar() {
         System.out.println("Digite o nome do cliente para buscar:");

@@ -1,4 +1,4 @@
 Cliente: Matheus
-Prato: pizza
-Valor: 50.0
+Prato: Pizza
+Valor: 75.0
 Status: ENTREGUE
