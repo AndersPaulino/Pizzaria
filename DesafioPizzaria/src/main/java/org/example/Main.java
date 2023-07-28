@@ -52,7 +52,22 @@ public class Main {
         System.out.println("Digite o número da opção desejada:");
     }
     public static void cadastrar(){
+        System.out.println("Cadastrar");
+        System.out.println("Digite o Nome!");
+        String nome = scanner.next();
+        System.out.println("Digite o Cpf!");
+        String cpf = scanner.next();
 
+        System.out.println("Digite nome do Bairro!");
+        String bairro = scanner.next();
+        System.out.println("Digite o nome da Rua!");
+        String rua = scanner.next();
+        System.out.println("Digite o numero da Casa!");
+        int numero = scanner.nextInt();
+
+        enderecos.add(new Endereco(bairro,rua, numero));
+
+        clientes.add(new Cliente(nome,cpf,enderecos));
     }
     public static void pedido(){
 
