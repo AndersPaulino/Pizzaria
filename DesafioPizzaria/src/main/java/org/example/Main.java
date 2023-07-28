@@ -72,8 +72,28 @@ public class Main {
     public static void pedido(){
 
     }
-    public static void buscar(){
-
+    public static void buscar() {
+        System.out.println("Digite o nome do cliente para buscar:");
+        String nomeBusca = scanner.next();
+        boolean clienteEncontrado = false;
+        for (Cliente cliente : clientes) {
+            if (cliente.getNome().equalsIgnoreCase(nomeBusca)) {
+                System.out.println("Cliente encontrado:");
+                System.out.println("Nome: " + cliente.getNome());
+                System.out.println("CPF: " + cliente.getCpf());
+                List<Endereco> enderecosPessoa = cliente.getEndereços();
+                for (Endereco endereco : enderecosPessoa) {
+                    System.out.println("Bairro: " + endereco.getBairro());
+                    System.out.println("Rua: " + endereco.getRua());
+                    System.out.println("Numero: " + endereco.getNumero());
+                }
+                clienteEncontrado = true;
+                break;
+            }
+        }
+        if (!clienteEncontrado) {
+            System.out.println("Pessoa não encontrada.");
+        }
     }
     public static void entregar(){
 
