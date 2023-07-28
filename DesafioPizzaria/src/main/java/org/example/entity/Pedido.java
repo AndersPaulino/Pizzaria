@@ -1,13 +1,18 @@
 package org.example.entity;
 
-import java.util.List;
-
 public class Pedido {
     private String nome;
-    private List<Cliente> clientes;
+    private Cliente cliente;
+    private StatusPedido status;
+    private double valor;
 
-    public Pedido() {
+    public Pedido() {}
 
+    public Pedido(String nome, Cliente cliente, StatusPedido status, double valor) {
+        this.nome = nome;
+        this.cliente = cliente;
+        this.status = status;
+        this.valor = valor;
     }
 
     public String getNome() {
@@ -18,11 +23,27 @@ public class Pedido {
         this.nome = nome;
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 }

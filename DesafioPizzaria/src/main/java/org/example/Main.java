@@ -2,7 +2,12 @@ package org.example;
 
 import org.example.entity.Cliente;
 import org.example.entity.Endereco;
+import org.example.entity.Pedido;
+import org.example.entity.StatusPedido;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +16,8 @@ public class Main {
 
     static List<Cliente> clientes = new ArrayList<>();
     static List<Endereco> enderecos = new ArrayList<>();
+
+    static List<Pedido> pedidos = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -73,9 +80,32 @@ public class Main {
 
         clientes.add(new Cliente(nome,cpf,enderecos));
     }
-    public static void pedido(){
+    public static void pedido() {
+        System.out.println("Novo Pedido");
+        System.out.println("Digite o nome do cliente:");
+        String nomeCliente = scanner.next();
+        Cliente clienteEncontrado = null;
+        for (Cliente cliente : clientes) {
+            if (cliente.getNome().equalsIgnoreCase(nomeCliente)) {
+                clienteEncontrado = cliente;
+                break;
+            }
+        }
 
+        if (clienteEncontrado != null) {
+            System.out.println("Digite o nome do prato:");
+            String nomePrato = scanner.next();
+            System.out.println("Digite o valor do pedido:");
+            double valorPedido = scanner.nextDouble();
+
+            Pedido pedido = new Pedido(nomePrato, clienteEncontrado, StatusPedido.PENDENTE, valorPedido);
+            pedidos.add(pedido);
+            System.out.println("Pedido criado com sucesso!");
+        } else {
+            System.out.println("Cliente não encontrado.");
+        }
     }
+
     public static void verPedidos(){
 
     }
@@ -102,7 +132,40 @@ public class Main {
             System.out.println("Pessoa não encontrada.");
         }
     }
-    public static void entregar(){
+    public static void entregar() {
+        System.out.println("Digite o nome do cliente para marcar como entregue:");
+        String nomeCliente = scanner.next();
 
+        for (Pedido pedido : pedidos) {
+            if (pedido.getCliente().getNome().equalsIgnoreCase(nomeCliente)) {
+                pedido.setStatus(StatusPedido.ENTREGUE);
+                System.out.println("Pedido entregue com sucesso!");
+
+                try {
+                    String fileName = "pedido_" + pedido.getNome() + ".txt";
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+
+                    writer.write("Cliente: " + pedido.getCliente().getNome());
+                    writer.newLine();
+                    writer.write("Prato: " + pedido.getNome());
+                    writer.newLine();
+                    writer.write("Valor: " + pedido.getValor());
+                    writer.newLine();
+                    writer.write("Status: " + pedido.getStatus());
+                    writer.newLine();
+
+                    writer.close();
+                    System.out.println("Arquivo TXT gerado com sucesso: " + fileName);
+                } catch (IOException e) {
+                    System.out.println("Erro ao gerar o arquivo TXT.");
+                    e.printStackTrace();
+                }
+
+                return;
+            }
+        }
+
+        System.out.println("Cliente não encontrado ou pedido não existente.");
     }
+
 }
