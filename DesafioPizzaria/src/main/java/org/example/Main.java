@@ -16,7 +16,6 @@ public class Main {
 
     static List<Cliente> clientes = new ArrayList<>();
     static List<Endereco> enderecos = new ArrayList<>();
-
     static List<Pedido> pedidos = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
@@ -86,6 +85,7 @@ public class Main {
         clientes.add(new Cliente(nome,cpf,enderecos));
     }
     public static void pedido() {
+        scanner.nextLine();
         if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente encontrado. É necessário cadastrar um cliente antes de fazer um pedido.");
             return;
@@ -104,10 +104,11 @@ public class Main {
         }
 
         if (numeroClienteEscolhido >= 1 && numeroClienteEscolhido <= clientes.size()) {
+            scanner.nextLine();
             Cliente clienteEscolhido = clientes.get(numeroClienteEscolhido - 1);
             System.out.println("Cliente selecionado: " + clienteEscolhido.getNome());
             System.out.println("Digite o nome do prato:");
-            String nomePrato = scanner.next();
+            String nomePrato = scanner.nextLine();
             System.out.println("Digite o valor do pedido:");
             double valorPedido = scanner.nextDouble();
 
@@ -208,11 +209,12 @@ public class Main {
                     System.out.println("--------------------");
                 }
             } else if (opcao == 2) {
+                scanner.nextLine();
                 // Editar endereço
                 System.out.println("Digite o novo bairro:");
-                String novoBairro = scanner.next();
+                String novoBairro = scanner.nextLine();
                 System.out.println("Digite a nova rua:");
-                String novaRua = scanner.next();
+                String novaRua = scanner.nextLine();
                 System.out.println("Digite o novo número:");
                 int novoNumero = scanner.nextInt();
 

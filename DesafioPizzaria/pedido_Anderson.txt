@@ -1,9 +1,0 @@
-Cliente: Anderson
-Prato: catupiti
-Valor: 68.0
-Status: ENTREGUE
-Endereços do cliente:
-- Bairro: paulo
-  Rua: joao
-  Número: 269
---------------------
