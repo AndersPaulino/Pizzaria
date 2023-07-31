@@ -5,6 +5,8 @@ public class Pedido {
     private Cliente cliente;
     private StatusPedido status;
     private double valor;
+    private static int numeroPedidoCounter = 1;
+    private int numeroPedido;
 
     public Pedido() {}
 
@@ -13,6 +15,7 @@ public class Pedido {
         this.cliente = cliente;
         this.status = status;
         this.valor = valor;
+        this.numeroPedido = numeroPedidoCounter++;
     }
 
     public String getNome() {
@@ -45,5 +48,10 @@ public class Pedido {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    // Método para obter o número do pedido
+    public int getNumeroPedido() {
+        return numeroPedido;
     }
 }

@@ -1,0 +1,9 @@
+Cliente: Matheus
+Prato: CALABRESA
+Valor: 45.0
+Status: ENTREGUE
+Endereços do cliente:
+- Bairro: Panorama
+  Rua: Belgica
+  Número: 511
+--------------------
