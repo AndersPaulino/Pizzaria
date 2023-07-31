@@ -7,12 +7,12 @@ public class Cliente {
     private String nome;
     private String cpf;
 
-    List<Endereco> endereços = new ArrayList<>();
+    List<Endereco> enderecos = new ArrayList<>();
 
-    public Cliente(String nome, String cpf, List<Endereco> endereços) {
+    public Cliente(String nome, String cpf, List<Endereco> enderecos) {
         this.nome = nome;
         this.cpf = cpf;
-        this.endereços = endereços;
+        this.enderecos = enderecos;
     }
 
     public String getNome() {
@@ -31,11 +31,11 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public List<Endereco> getEndereços() {
-        return endereços;
+    public List<Endereco> getEnderecos() {
+        return enderecos;
     }
 
-    public void setEndereços(List<Endereco> endereços) {
-        this.endereços = endereços;
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 }

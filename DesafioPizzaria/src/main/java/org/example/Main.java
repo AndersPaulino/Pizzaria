@@ -20,6 +20,7 @@ public class Main {
     static List<Pedido> pedidos = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
+
     public static void main(String[] args) {
         int opcao = 1;
 
@@ -63,21 +64,25 @@ public class Main {
         System.out.println("Digite o número da opção desejada:");
     }
     public static void cadastrar(){
+        scanner.nextLine();
         System.out.println("Cadastrar");
-        System.out.println("Digite o Nome!");
-        String nome = scanner.next();
-        System.out.println("Digite o Cpf!");
-        String cpf = scanner.next();
 
-        System.out.println("Digite nome do Bairro!");
-        String bairro = scanner.next();
-        System.out.println("Digite o nome da Rua!");
-        String rua = scanner.next();
-        System.out.println("Digite o numero da Casa!");
+        System.out.println("Digite o Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.println("Digite o CPF: ");
+        String cpf = scanner.nextLine();
+
+        System.out.println("Digite nome do Bairro: ");
+        String bairro = scanner.nextLine();
+
+        System.out.println("Digite o nome da Rua: ");
+        String rua = scanner.nextLine();
+
+        System.out.println("Digite o numero da Casa: ");
         int numero = scanner.nextInt();
 
         enderecos.add(new Endereco(bairro,rua, numero));
-
         clientes.add(new Cliente(nome,cpf,enderecos));
     }
     public static void pedido() {
@@ -195,7 +200,7 @@ public class Main {
 
             if (opcao == 1) {
                 // Listar endereços
-                List<Endereco> enderecosPessoa = clienteEscolhido.getEndereços();
+                List<Endereco> enderecosPessoa = clienteEscolhido.getEnderecos();
                 for (Endereco endereco : enderecosPessoa) {
                     System.out.println("Bairro: " + endereco.getBairro());
                     System.out.println("Rua: " + endereco.getRua());
@@ -212,7 +217,7 @@ public class Main {
                 int novoNumero = scanner.nextInt();
 
                 // Atualizar o endereço do cliente
-                List<Endereco> enderecosPessoa = clienteEscolhido.getEndereços();
+                List<Endereco> enderecosPessoa = clienteEscolhido.getEnderecos();
                 Endereco enderecoAtualizado = new Endereco(novoBairro, novaRua, novoNumero);
                 enderecosPessoa.clear();
                 enderecosPessoa.add(enderecoAtualizado);
@@ -251,7 +256,7 @@ public class Main {
             System.out.println((i + 1) + ". " + cliente.getNome());
 
             // Exibe os endereços do cliente
-            List<Endereco> enderecosCliente = cliente.getEndereços();
+            List<Endereco> enderecosCliente = cliente.getEnderecos();
             System.out.println("   Endereços:");
             for (Endereco endereco : enderecosCliente) {
                 System.out.println("   - Bairro: " + endereco.getBairro());
@@ -296,7 +301,7 @@ public class Main {
                         writer.newLine();
                         writer.write("Endereços do cliente:");
                         writer.newLine();
-                        List<Endereco> enderecosCliente = clienteEscolhido.getEndereços();
+                        List<Endereco> enderecosCliente = clienteEscolhido.getEnderecos();
                         for (Endereco endereco : enderecosCliente) {
                             writer.write("- Bairro: " + endereco.getBairro());
                             writer.newLine();
