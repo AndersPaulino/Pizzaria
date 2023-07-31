@@ -122,28 +122,67 @@ public class Main {
         }
     }
     public static void buscar() {
-        System.out.println("Digite o nome do cliente para buscar:");
-        String nomeBusca = scanner.next();
-        boolean clienteEncontrado = false;
-        for (Cliente cliente : clientes) {
-            if (cliente.getNome().equalsIgnoreCase(nomeBusca)) {
-                System.out.println("Cliente encontrado:");
-                System.out.println("Nome: " + cliente.getNome());
-                System.out.println("CPF: " + cliente.getCpf());
-                List<Endereco> enderecosPessoa = cliente.getEndereços();
+        if (clientes.isEmpty()) {
+            System.out.println("Nenhum cliente encontrado.");
+            return;
+        }
+
+        System.out.println("Lista de Clientes:");
+        for (int i = 0; i < clientes.size(); i++) {
+            System.out.println((i + 1) + ". " + clientes.get(i).getNome());
+        }
+
+        System.out.println("Digite o número do cliente que deseja visualizar/editar (ou 0 para sair):");
+        int numeroClienteEscolhido = scanner.nextInt();
+
+        if (numeroClienteEscolhido == 0) {
+            return;
+        }
+
+        if (numeroClienteEscolhido >= 1 && numeroClienteEscolhido <= clientes.size()) {
+            Cliente clienteEscolhido = clientes.get(numeroClienteEscolhido - 1);
+            System.out.println("Cliente selecionado: " + clienteEscolhido.getNome());
+            System.out.println("CPF: " + clienteEscolhido.getCpf());
+
+            // Opção de listar endereços ou editar endereço
+            System.out.println("Escolha uma opção:");
+            System.out.println("1 - Listar endereços");
+            System.out.println("2 - Editar endereço");
+            int opcao = scanner.nextInt();
+
+            if (opcao == 1) {
+                // Listar endereços
+                List<Endereco> enderecosPessoa = clienteEscolhido.getEndereços();
                 for (Endereco endereco : enderecosPessoa) {
                     System.out.println("Bairro: " + endereco.getBairro());
                     System.out.println("Rua: " + endereco.getRua());
-                    System.out.println("Numero: " + endereco.getNumero());
+                    System.out.println("Número: " + endereco.getNumero());
+                    System.out.println("--------------------");
                 }
-                clienteEncontrado = true;
-                break;
+            } else if (opcao == 2) {
+                // Editar endereço
+                System.out.println("Digite o novo bairro:");
+                String novoBairro = scanner.next();
+                System.out.println("Digite a nova rua:");
+                String novaRua = scanner.next();
+                System.out.println("Digite o novo número:");
+                int novoNumero = scanner.nextInt();
+
+                // Atualizar o endereço do cliente
+                List<Endereco> enderecosPessoa = clienteEscolhido.getEndereços();
+                Endereco enderecoAtualizado = new Endereco(novoBairro, novaRua, novoNumero);
+                enderecosPessoa.clear();
+                enderecosPessoa.add(enderecoAtualizado);
+
+                System.out.println("Endereço atualizado com sucesso!");
+            } else {
+                System.out.println("Opção inválida.");
             }
-        }
-        if (!clienteEncontrado) {
-            System.out.println("Pessoa não encontrada.");
+        } else {
+            System.out.println("Número de cliente inválido.");
         }
     }
+
     public static void entregar() {
         System.out.println("Digite o nome do cliente para marcar como entregue:");
         String nomeCliente = scanner.next();
