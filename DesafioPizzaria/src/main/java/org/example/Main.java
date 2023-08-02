@@ -64,14 +64,25 @@ public class Main {
     }
     public static void cadastrar() {
         List<Endereco> enderecos = new ArrayList<>();
+        String cpf = "0";
+        int i=0;
         scanner.nextLine();
         System.out.println("Cadastrar");
 
         System.out.println("Digite o Nome: ");
         String nome = scanner.nextLine();
 
-        System.out.println("Digite o CPF: ");
-        String cpf = scanner.nextLine();
+        while (i == 0) {
+            System.out.println("Digite o CPF: ");
+            cpf = scanner.nextLine();
+
+            if (validarCpf(cpf)) {
+                System.out.println("CPF válido!");
+                i = 1;
+            } else {
+                System.out.println("CPF inválido!");
+            }
+        }
 
         System.out.println("Digite nome do Bairro: ");
         String bairro = scanner.nextLine();
@@ -84,6 +95,53 @@ public class Main {
 
         enderecos.add(new Endereco(bairro, rua, numero));
         clientes.add(new Cliente(nome, cpf, enderecos));
+    }
+
+    public static boolean validarCpf(String cpf) {
+        // Remove caracteres não numéricos (como pontos e hífens)
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se o CPF possui 11 dígitos
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        // Verifica se todos os dígitos são iguais (CPF inválido)
+        if (cpf.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+
+        // Calcula o primeiro dígito verificador
+        int soma = 0;
+        for (int i = 0; i < 9; i++) {
+            soma += (cpf.charAt(i) - '0') * (10 - i);
+        }
+        int primeiroDigito = 11 - (soma % 11);
+        if (primeiroDigito > 9) {
+            primeiroDigito = 0;
+        }
+
+        // Verifica o primeiro dígito verificador
+        if ((cpf.charAt(9) - '0') != primeiroDigito) {
+            return false;
+        }
+
+        // Calcula o segundo dígito verificador
+        soma = 0;
+        for (int i = 0; i < 10; i++) {
+            soma += (cpf.charAt(i) - '0') * (11 - i);
+        }
+        int segundoDigito = 11 - (soma % 11);
+        if (segundoDigito > 9) {
+            segundoDigito = 0;
+        }
+
+        // Verifica o segundo dígito verificador
+        if ((cpf.charAt(10) - '0') != segundoDigito) {
+            return false;
+        }
+
+        return true;
     }
 
     public static void pedido() {
@@ -135,9 +193,6 @@ public class Main {
             System.out.println("Número de cliente inválido.");
         }
     }
-
-
-
     public static void verPedidos(){
         if (pedidos.isEmpty()) {
             System.out.println("Nenhum pedido encontrado.");
