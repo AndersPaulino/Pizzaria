@@ -1,0 +1,10 @@
+Cliente: Matheus Aguiar
+Prato: Pizza de Chocolate
+Valor: 44.0
+Status: ENTREGUE
+--------------------
+Cliente: Matheus Aguiar
+Prato: Coca Cola 
+Valor: 10.0
+Status: ENTREGUE
+--------------------

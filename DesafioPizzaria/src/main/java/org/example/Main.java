@@ -52,7 +52,7 @@ public class Main {
         }
         scanner.close();
     }
-    public static void menu() {
+    public static void menu(){
         System.out.println("Menu");
         System.out.println("1 - Cadastrar novo cliente!");
         System.out.println("2 - Novo Pedido!");
@@ -62,7 +62,8 @@ public class Main {
         System.out.println("0 - Sair");
         System.out.println("Digite o número da opção desejada:");
     }
-    public static void cadastrar(){
+    public static void cadastrar() {
+        List<Endereco> enderecos = new ArrayList<>();
         scanner.nextLine();
         System.out.println("Cadastrar");
 
@@ -81,9 +82,10 @@ public class Main {
         System.out.println("Digite o numero da Casa: ");
         int numero = scanner.nextInt();
 
-        enderecos.add(new Endereco(bairro,rua, numero));
-        clientes.add(new Cliente(nome,cpf,enderecos));
+        enderecos.add(new Endereco(bairro, rua, numero));
+        clientes.add(new Cliente(nome, cpf, enderecos));
     }
+
     public static void pedido() {
         scanner.nextLine();
         if (clientes.isEmpty()) {
@@ -107,35 +109,51 @@ public class Main {
             scanner.nextLine();
             Cliente clienteEscolhido = clientes.get(numeroClienteEscolhido - 1);
             System.out.println("Cliente selecionado: " + clienteEscolhido.getNome());
-            System.out.println("Digite o nome do prato:");
-            String nomePrato = scanner.nextLine();
-            System.out.println("Digite o valor do pedido:");
-            double valorPedido = scanner.nextDouble();
 
-            Pedido pedido = new Pedido(nomePrato, clienteEscolhido, StatusPedido.PENDENTE, valorPedido);
-            pedidos.add(pedido);
-            System.out.println("Pedido criado com sucesso!");
+            boolean fazerMaisPedido = true;
+            while (fazerMaisPedido) {
+                System.out.println("Digite o nome do prato:");
+                String nomePrato = scanner.nextLine();
+                System.out.println("Digite o valor do pedido:");
+                double valorPedido = scanner.nextDouble();
+
+                Pedido pedido = new Pedido(nomePrato, clienteEscolhido, StatusPedido.PENDENTE, valorPedido);
+                pedidos.add(pedido);
+                System.out.println("Pedido adicionado com sucesso!");
+
+                System.out.println("Deseja fazer mais um pedido? (Digite 'sim' ou 'nao')");
+                scanner.nextLine();
+                String resposta = scanner.nextLine().toLowerCase();
+
+                if (resposta.equals("nao")) {
+                    fazerMaisPedido = false;
+                }
+            }
+
+            System.out.println("Pedido(s) criado(s) com sucesso!");
         } else {
             System.out.println("Número de cliente inválido.");
         }
     }
 
 
-    public static void verPedidos() {
+
+    public static void verPedidos(){
         if (pedidos.isEmpty()) {
             System.out.println("Nenhum pedido encontrado.");
             return;
         }
 
         System.out.println("Lista de Pedidos:");
-        for (int i = 0; i < pedidos.size(); i++) {
+        for (int i = 0; i < pedidos.size(); i++){
             Pedido pedido = pedidos.get(i);
-            System.out.println((i + 1) + ". Número do Pedido: " + pedido.getNumeroPedido());
-            System.out.println("   Cliente: " + pedido.getCliente().getNome());
-            System.out.println("   Prato: " + pedido.getNome());
-            System.out.println("   Valor: " + pedido.getValor());
-            System.out.println("   Status: " + pedido.getStatus());
-            System.out.println("--------------------");
+            System.out.println("  ____________________________   ");
+            System.out.println(" | " + (i + 1) + ". Número do Pedido: " + pedido.getNumeroPedido());
+            System.out.println(" | " +"   Cliente: " + pedido.getCliente().getNome());
+            System.out.println(" | " +"   Prato: " + pedido.getNome());
+            System.out.println(" | " +"   Valor: " + pedido.getValor());
+            System.out.println(" | " +"   Status: " + pedido.getStatus());
+            System.out.println("  ____________________________  ");
         }
 
         System.out.println("Digite o número do pedido que deseja alterar o status (ou 0 para sair):");
@@ -211,25 +229,30 @@ public class Main {
             } else if (opcao == 2) {
                 scanner.nextLine();
                 // Editar endereço
-                System.out.println("Digite o novo bairro:");
-                String novoBairro = scanner.nextLine();
-                System.out.println("Digite a nova rua:");
-                String novaRua = scanner.nextLine();
-                System.out.println("Digite o novo número:");
-                int novoNumero = scanner.nextInt();
+                System.out.println("Digite o número do endereço que deseja editar:");
+                int numeroEnderecoEscolhido = scanner.nextInt();
 
-                // Atualizar o endereço do cliente
-                List<Endereco> enderecosPessoa = clienteEscolhido.getEnderecos();
-                Endereco enderecoAtualizado = new Endereco(novoBairro, novaRua, novoNumero);
-                enderecosPessoa.clear();
-                enderecosPessoa.add(enderecoAtualizado);
+                if (numeroEnderecoEscolhido >= 1 && numeroEnderecoEscolhido <= clienteEscolhido.getEnderecos().size()) {
+                    scanner.nextLine();
+                    System.out.println("Digite o novo bairro:");
+                    String novoBairro = scanner.nextLine();
+                    System.out.println("Digite a nova rua:");
+                    String novaRua = scanner.nextLine();
+                    System.out.println("Digite o novo número:");
+                    int novoNumero = scanner.nextInt();
 
-                System.out.println("Endereço atualizado com sucesso!");
+                    // Atualizar o endereço do cliente
+                    List<Endereco> enderecosPessoa = clienteEscolhido.getEnderecos();
+                    Endereco enderecoAtualizado = new Endereco(novoBairro, novaRua, novoNumero);
+                    enderecosPessoa.set(numeroEnderecoEscolhido - 1, enderecoAtualizado);
+
+                    System.out.println("Endereço atualizado com sucesso!");
+                } else {
+                    System.out.println("Número de endereço inválido.");
+                }
             } else {
                 System.out.println("Opção inválida.");
             }
-        } else {
-            System.out.println("Número de cliente inválido.");
         }
     }
 
@@ -256,15 +279,6 @@ public class Main {
         for (int i = 0; i < clientesComPedidoProntaEntrega.size(); i++) {
             Cliente cliente = clientesComPedidoProntaEntrega.get(i);
             System.out.println((i + 1) + ". " + cliente.getNome());
-
-            // Exibe os endereços do cliente
-            List<Endereco> enderecosCliente = cliente.getEnderecos();
-            System.out.println("   Endereços:");
-            for (Endereco endereco : enderecosCliente) {
-                System.out.println("   - Bairro: " + endereco.getBairro());
-                System.out.println("     Rua: " + endereco.getRua());
-                System.out.println("     Número: " + endereco.getNumero());
-            }
         }
 
         System.out.println("Digite o número do cliente para marcar o pedido como entregue (ou 0 para sair):");
@@ -278,12 +292,12 @@ public class Main {
             Cliente clienteEscolhido = clientesComPedidoProntaEntrega.get(numeroClienteEscolhido - 1);
             System.out.println("Cliente selecionado: " + clienteEscolhido.getNome());
 
-            // Marca o pedido como entregue para o cliente escolhido
+            // Marca todos os pedidos como entregues para o cliente escolhido
+            List<Pedido> pedidosEntregues = new ArrayList<>();
             for (Pedido pedido : pedidos) {
                 if (pedido.getCliente().equals(clienteEscolhido) && pedido.getStatus() == StatusPedido.PRONTA_ENTREGA) {
                     pedido.setStatus(StatusPedido.ENTREGUE);
-                    System.out.println("Pedido entregue com sucesso!");
-                    break;
+                    pedidosEntregues.add(pedido);
                 }
             }
 
@@ -291,30 +305,17 @@ public class Main {
                 String fileName = "pedido_" + clienteEscolhido.getNome() + ".txt";
                 BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
-                for (Pedido pedido : pedidos) {
-                    if (pedido.getCliente().equals(clienteEscolhido) && pedido.getStatus() == StatusPedido.ENTREGUE) {
-                        writer.write("Cliente: " + pedido.getCliente().getNome());
-                        writer.newLine();
-                        writer.write("Prato: " + pedido.getNome());
-                        writer.newLine();
-                        writer.write("Valor: " + pedido.getValor());
-                        writer.newLine();
-                        writer.write("Status: " + pedido.getStatus());
-                        writer.newLine();
-                        writer.write("Endereços do cliente:");
-                        writer.newLine();
-                        List<Endereco> enderecosCliente = clienteEscolhido.getEnderecos();
-                        for (Endereco endereco : enderecosCliente) {
-                            writer.write("- Bairro: " + endereco.getBairro());
-                            writer.newLine();
-                            writer.write("  Rua: " + endereco.getRua());
-                            writer.newLine();
-                            writer.write("  Número: " + endereco.getNumero());
-                            writer.newLine();
-                        }
-                        writer.write("--------------------");
-                        writer.newLine();
-                    }
+                for (Pedido pedido : pedidosEntregues) {
+                    writer.write("Cliente: " + pedido.getCliente().getNome());
+                    writer.newLine();
+                    writer.write("Prato: " + pedido.getNome());
+                    writer.newLine();
+                    writer.write("Valor: " + pedido.getValor());
+                    writer.newLine();
+                    writer.write("Status: " + pedido.getStatus());
+                    writer.newLine();
+                    writer.write("--------------------");
+                    writer.newLine();
                 }
 
                 writer.close();
@@ -327,5 +328,4 @@ public class Main {
             System.out.println("Número de cliente inválido.");
         }
     }
-
 }
